@@ -3,16 +3,35 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+//USER AUTHENTICATION DEPENDENCIES
+const dotenv = require('dotenv').config();
+const session = require('express-session');
+const bcrypt = require('bcrypt');
+const methodOverride = require('method-override');
+
+//CONNECTION CONFIGURATIONS
 const APP = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
+
 
 // MIDDLEWARE
-APP.use(express.json())
+APP.use(express.urlencoded({extended: true}));
+APP.use(express.json());
+APP.use(methodOverride('_method'));
+APP.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUnitialized: false
+    })
+)
 
 // SET UP MONGO CONNECTION
-mongoose.connect('mongodb://localhost:27017/reviews', {
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
 });
 mongoose.connection.once('open', () => {
     console.log('Connected to Mongo');
@@ -33,11 +52,23 @@ const corsOptions = {
 
 APP.use(cors(corsOptions))
 
-// USE REVIEWS CONTROLLER
+// USE  CONTROLLERS
 
+//Reviews Controller
 const reviewsController = require('./controllers/reviews_controller.js');
 APP.use('/reviews', reviewsController);
 
+//Users Controller
+const userController = require('./controllers/users_controller.js');
+APP.use('/users', userController);
+
+//Sessions Controller
+const sessionsController = require('./controllers/sessions_controller.js');
+APP.use('/sessions', sessionsController);
+
+//Maps Controller
+const mapsController = require('./controllers/maps_controller.js')
+APP.use("/maps", mapsController)
 
 // APP listening
 APP.listen(PORT, () => {console.log('Listening on port ', PORT)});
