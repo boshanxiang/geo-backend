@@ -23,16 +23,12 @@
   },
   "homepage": "https://github.com/boshanxiang/geo-backend#readme",
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "method-override": "^3.0.0"
-=======
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.12.13"
->>>>>>> 41f4ea7f3e2f5a00d672835e9071dd7a20c461e6
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.14"
   }
 }
