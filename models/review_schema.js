@@ -4,8 +4,8 @@ const reviewSchema = mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
     rating: {type: Number, required: true},
-    location: {type: String, required: true},
-    address: String,
+    lat: {type: Number},
+    lng: {type: Number},
     url: String,
     phone: String,
     email: String
