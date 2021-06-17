@@ -51,8 +51,8 @@ mongoose.connection.once('open', () => {
 });
 
 // CONFIGURE CORS MIDDLEWARE
-const herokuWhitelist = '' // TO UPDATE WITH HEROKU URL WHEN AVAILABLE
-const whitelist = ['http://localhost:3000', herokuWhitelist]
+// const herokuWhitelist = ''
+// const whitelist = ['http://localhost:3000', herokuWhitelist]
 // const corsOptions = {
 //     origin: function (origin, callback) {
 //         if (whitelist.indexOf(origin) !== -1) {
