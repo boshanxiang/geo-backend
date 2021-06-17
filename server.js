@@ -14,6 +14,19 @@ const APP = express();
 const PORT = process.env.PORT || 3000;
 const MONGODB = process.env.MONGODB;
 
+const allowedURLs = ['http://localhost:3000', 'https://morning-badlands-49933.herokuapp.com'];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedURLs.indexOf(origin) >= 0) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+};
+
+app.use(cors(corsOptions));
 
 // MIDDLEWARE
 APP.use(express.urlencoded({ extended: true }));
