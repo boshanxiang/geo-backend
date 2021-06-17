@@ -5,7 +5,7 @@ const axios = require('axios')
 const API_KEY = process.env.API_KEY;
 
 maps.get("/:userLocation", (req, res) => { 
-    axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?inputtype=textquery&keyword=restaurant&key=AIzaSyCwksum9i8ufeThaXMWHAjrzEexx8j2qJc&fields=name,geometry&input=${req.params.userLocation}`)
+    axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?inputtype=textquery&keyword=restaurant&key=${API_KEY}&fields=name,geometry&input=${req.params.userLocation}`)
         .then(resAxios => res.status(200).json(resAxios.data))
         .catch(error => console.log(error))
 })
