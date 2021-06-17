@@ -12,11 +12,11 @@ const methodOverride = require('method-override');
 //CONNECTION CONFIGURATIONS
 const APP = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB = process.env.MONGODB;
 
 
 // MIDDLEWARE
-APP.use(express.urlencoded({extended: true}));
+APP.use(express.urlencoded({ extended: true }));
 APP.use(express.json());
 APP.use(methodOverride('_method'));
 APP.use(
@@ -28,7 +28,7 @@ APP.use(
 )
 
 // SET UP MONGO CONNECTION
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -71,4 +71,4 @@ const mapsController = require('./controllers/maps_controller.js')
 APP.use("/maps", mapsController)
 
 // APP listening
-APP.listen(PORT, () => {console.log('Listening on port ', PORT)});
+APP.listen(PORT, () => { console.log('Listening on port ', PORT) });
