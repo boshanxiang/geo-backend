@@ -53,17 +53,17 @@ mongoose.connection.once('open', () => {
 // CONFIGURE CORS MIDDLEWARE
 const herokuWhitelist = '' // TO UPDATE WITH HEROKU URL WHEN AVAILABLE
 const whitelist = ['http://localhost:3000', herokuWhitelist]
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
 
-APP.use(cors(corsOptions))
+// APP.use(cors(corsOptions))
 
 // USE  CONTROLLERS
 
