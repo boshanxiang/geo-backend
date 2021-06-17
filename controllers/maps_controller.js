@@ -3,6 +3,7 @@ const maps = express.Router()
 const axios = require('axios')
 
 const API_KEY = process.env.API_KEY;
+console.log("Backend API KEY IS, ", API_KEY);
 
 maps.get("/:userLocation", (req, res) => { 
     axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?inputtype=textquery&keyword=restaurant&key=${API_KEY}&fields=name,geometry&input=${req.params.userLocation}`)
