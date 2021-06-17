@@ -12,11 +12,24 @@ const methodOverride = require('method-override');
 //CONNECTION CONFIGURATIONS
 const APP = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB = process.env.MONGODB;
 
+const allowedURLs = ['http://localhost:3000', 'https://morning-badlands-49933.herokuapp.com'];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedURLs.indexOf(origin) >= 0) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+};
+
+APP.use(cors(corsOptions));
 
 // MIDDLEWARE
-APP.use(express.urlencoded({extended: true}));
+APP.use(express.urlencoded({ extended: true }));
 APP.use(express.json());
 APP.use(methodOverride('_method'));
 APP.use(
@@ -28,7 +41,7 @@ APP.use(
 )
 
 // SET UP MONGO CONNECTION
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -40,17 +53,17 @@ mongoose.connection.once('open', () => {
 // CONFIGURE CORS MIDDLEWARE
 const herokuWhitelist = '' // TO UPDATE WITH HEROKU URL WHEN AVAILABLE
 const whitelist = ['http://localhost:3000', herokuWhitelist]
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
 
-APP.use(cors(corsOptions))
+// APP.use(cors(corsOptions))
 
 // USE  CONTROLLERS
 
@@ -71,4 +84,4 @@ const mapsController = require('./controllers/maps_controller.js')
 APP.use("/maps", mapsController)
 
 // APP listening
-APP.listen(PORT, () => {console.log('Listening on port ', PORT)});
+APP.listen(PORT, () => { console.log('Listening on port ', PORT) });
